@@ -10,3 +10,6 @@ While regular guys can add, archive, delete todos for their department, common o
 As I did my best for my first independent project, still some updates and fixes requires.
 I will try to add a admin dashboard soon.
 Also that would be better if I can sort todos according their deadlines at index page. I need to handle with JS a bit.
+
+To see how it looks like:
+[http://hamdiozdemir.pythonanywhere.com/]
