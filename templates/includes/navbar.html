@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #94B49F;">
+    <a class="navbar-brand" href="/" style="font-family:French Script MT;" >Mind Your Business</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="/"> <b>HOME</b> <span class="sr-only">(current)</span></a>
+        {% if session["logged_in"] %}
+        <a class="nav-item nav-link" href="/viewarchive">Archive</a>
+
+        {% endif %}
+      </div>
+
+      <ul class="navbar-nav ml-auto"> 
+      {% if session["logged_in"] %}
+      <li class="nav-item active">
+        <a class="nav-link" href="/logout"> Logout </a>
+      </li>
+      {% else %}
+      <li class="nav-item active">
+        <a class="nav-link" href="/login"> Login </a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/register"> Register </a>
+      </li>
+      {% endif %}
+           
+        
+    </ul>
+    </div>
+  </nav>

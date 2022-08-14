@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+{% from "includes/formhelpers.html" import render_field %}
+
+
+<div class="container">
+    <form method="POST">
+        <dl>
+          {{ render_field(form.name, class ="form-control") }}
+          {{ render_field(form.surname, class ="form-control") }}
+          {{ render_field(form.username, class ="form-control") }}
+          {{ render_field(form.password, class ="form-control") }}
+          {{ render_field(form.department, class ="form-control") }}
+        </dl>
+        <p><button type="submit" class="btn btn-dark">Register</button>
+      </form>
+</div>
+
+
+
+
+
+
+{% endblock body %}

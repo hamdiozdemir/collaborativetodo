@@ -1,0 +1,137 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+{% from "includes/formhelpers.html" import render_field %}
+
+
+<div class="flex">
+    
+    <div><img src="{{url_for('static', filename='logo2.png')}}", width="100px" ,height=auto class="center"/></div>
+    <div class="hello"><h4>Let's have a look what we have today!</h4></div>
+       
+</div>
+
+{% if session["logged_in"] %}
+
+<div class="container-fluid">
+    
+    <B>Welcome {{session["name"]}}</B> 
+
+    <div class="row">
+        <div class="box box-left col-8">
+
+          <!--This lines below, doesn't work. Couldn't find why.--->
+            {% if todos == [] %}
+                <div class="alert alert-success" role="alert"> We have NOTHING to do! YEEEEAAAYYYYYY!!</div>
+            {% else %}
+
+            <table class="table table-striped">
+            <thead>
+              <tr>
+
+                <th scope="col">Title</th>
+                <th scope="col">Explanation</th>
+                <th scope="col">Status</th>
+                <th scope="col">Responsible</th>
+                <th scope="col">Deadline</th>
+                <th scope="col">Complete</th>
+                <th scope="col">Archieve</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for todo in todos %}
+              <tr>
+                <th scope="row">{{todo.title}}</th>
+                <td>{{todo.content}}</td>
+                <td>
+                    {% if todo.complete %}
+                    <font color="green"> <b>OK</b> </font> 
+                    {% else %}
+                    <font color="red"> <b>Waiting</b> </font> 
+                    {% endif %}
+
+                </td>
+                <td>{{todo.responsible}}</td>
+                <td>
+                  {% if todo.complete %}
+                  <B>DONE</B>
+                  {% else %}
+                    {% if (todo.last_date-today).days<0 %}
+                    <font color="red"><b> {{((todo.last_date-today).days)*(-1)}} days DELAYED</b> </font> 
+                    {% else %}
+                    {{(todo.last_date-today).days}} days left
+                    {% endif %}
+
+                  {% endif %}
+                </td>
+                <td>
+                  {% if todo.complete %}
+                  <a href="/complete/{{todo.id}}" class="btn btn-warning">Not Yet</a> 
+                  {% else %}
+                  <a href="/complete/{{todo.id}}" class="btn btn-success">Complete</a> 
+                  {% endif %}
+                </td>
+                <td><a href="/archive/{{todo.id}}" class="btn btn-danger" style="background-color: #ECB390;">Archive</a> </td>
+              
+              {% endfor %}
+            </tbody>
+          </table>
+            {% endif %}
+        </div>
+    
+
+
+        <div class="container-fluid box box-right col-4">
+          
+            <form style="margin-top:10px;" action="/add" method ="POST">
+                <div class="form-group">
+                    <label for="formGroupExampleInput"><B>ADD JOB</B></label>
+                    <input type="text" class="form-control" name ="title" id="formGroupExampleInput" placeholder="The Job"> <br>
+                    <input type="text" class="form-control" name ="content" id="formGroupExampleInput" placeholder="Explanation (Optional)"> <br>
+                    <select class="form-control" name="responsible" id="exampleFormControlSelect1">
+                      <option>Common</option>
+                      {% if session["department"] =="Admin" %}
+                      {% for department in departmentsAll %}
+                      <option>{{  department  }}</option>
+                      {% endfor %}
+
+                      {% for user in users %}
+                      <option>{{  user.name  }}</option>
+                      
+                      {% endfor %}
+                                            
+                      {% else %}
+                      <option>{{  session["department"]  }}</option>
+                      {% endif %}
+                    </select>
+                    <br>
+                    {{render_field(form.deadline, class="form-control")}}
+                    <button type="submit" style="color: black; background-color:#94B49F; border-color:#b6d1bf;" class="btn btn-info">Add</button>
+                </div>
+            </form>
+            
+
+        </div>
+
+
+    </div>
+
+{% else %}
+<div class="flex">
+    
+  <br>
+  <br>
+  <br>
+  <div class="hello"><h6><i>Oh, Maybe you can try to login or register first!</i></h6></div>
+     
+</div>
+{% endif %}
+
+
+
+</div>
+
+
+
+
+{% endblock body %}

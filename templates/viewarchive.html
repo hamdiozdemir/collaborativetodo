@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+
+<div class="container">
+    <h4 style="text-align:center;">The History Book</h4> 
+    <hr>
+
+    {% if session["logged_in"] %}
+
+        {% if archives == [] %}
+        <div class="alert alert-success" role="alert"> Have you done anything yet? What do you expect to see in here?</div>
+        {% else %}
+
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Job ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Explanation</th>
+                <th scope="col">Status</th>
+                <th scope="col">Department</th>
+                <th scope="col">Undo</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for archive in archives %}
+              <tr>
+                <th scope="row">{{archive.id}}</th>
+                <td>{{archive.title}}</td>
+                <td>{{archive.content}}</td>
+                <td>
+                    {% if archive.complete %}
+                    <font color="green"> <b>OK</b> </font> 
+                    {% else %}
+                    <font color="red"> <b>Waiting</b> </font> 
+                    {% endif %}
+
+                </td>
+                <td>{{archive.responsible}}</td>
+                <td><a href="/sendback/{{archive.id}}" class="btn btn-warning">Undo</a> </td>
+                <td><a href="/delete/{{archive.id}}" class="btn btn-danger">Delete</a> </td>
+
+              
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% endif %}
+
+    {% else %}
+
+    {% endif %}
+    
+</div>
+{% endblock body %}
